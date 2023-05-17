@@ -2,13 +2,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller('get') // controller用来控制路由 
+@Controller() // controller用来控制路由 
 export class AppController {
   constructor(private readonly appService: AppService) { // private readonly appService: AppService表示依赖注入，私有的、只读的
 
   }
 
-  @Get('hello')
+  @Get()
   getHello(): string {
     return this.appService.getName();
   }

@@ -1,11 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Version, Request, ConsoleLogger } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 
+/**
+ * {
+ *  path: 'story',
+ *  version: '1'
+ * }
+ * 版本控制。
+ */
 @Controller('story')
 export class StoryController {
-  constructor(private readonly storyService: StoryService) {}
+  constructor(private readonly storyService: StoryService) { }
 
   @Post()
   create(@Body() createStoryDto: CreateStoryDto) {
@@ -13,6 +20,7 @@ export class StoryController {
   }
 
   @Get()
+  @Version('1') // 控制单个请求方式的单个版本
   findAll() {
     return this.storyService.findAll();
   }

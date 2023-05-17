@@ -2,13 +2,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserController } from './user/user.controller';
-import { UserModule } from './user/user.module';
 import { StoryModule } from './story/story.module';
+import { UserModule } from './user/user.module';
 
 @Module({ // 类装饰器修饰AppModule
-  imports: [UserModule, StoryModule],
-  controllers: [AppController, UserController],
+  imports: [StoryModule, UserModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
