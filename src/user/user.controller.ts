@@ -1,11 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Version, Request, ConsoleLogger, Query, Headers, HttpCode, Redirect } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Version, Request, ConsoleLogger, Query, Headers, HttpCode, Redirect, Req, Res, Session } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as svgCaptcha from 'svg-captcha'
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
+
+  // 验证码校验
+  @Get('code')
+  createCode(@Req() req, @Res() res) {
+    const captcha = svgCaptcha.create({
+      size: 4,//生成几个验证码
+      fontSize: 50, //文字大小
+      width: 100,  //宽度
+      height: 34,  //高度
+      background: '#cc9966',  //背景颜色
+    })
+    req.session.code = captcha.text
+    res.type('image/svg+xml')
+    res.send(captcha.data)
+    return {
+      captcha
+    }
+  }
+  // 创建接口
+  @Post('create')
+  createUser(@Body() Body, @Session() session){
+    console.log(Body, session.code)
+    return {
+      code: 200
+    }
+  }
 
   @Get()
   // findAll(@Request() req) {
@@ -39,7 +66,7 @@ export class UserController {
   }
 
   @Get(':id')
-  @HttpCode(500) // 控制状态码
+  // @HttpCode(500) // 控制状态码
   // @Redirect 重定向路由器
   // findId(@Request() req) {
   //   console.log(req.params)
@@ -54,4 +81,5 @@ export class UserController {
       code: 200
     }
   }
+
 }
