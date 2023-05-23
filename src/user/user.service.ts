@@ -1,4 +1,4 @@
-import { Injectable,Req, Res, Session,Body } from '@nestjs/common';
+import { Injectable, Req, Res, Session, Body } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as svgCaptcha from 'svg-captcha'
@@ -9,7 +9,7 @@ export class UserService {
     return 'This action adds a new user';
   }
 
-  createCode(@Req() req, @Res() res) {
+  createCode(req, res) {
     const captcha = svgCaptcha.create({
       size: 4,//生成几个验证码
       fontSize: 50, //文字大小
@@ -25,7 +25,7 @@ export class UserService {
     }
   }
 
-  createUser(@Body() Body, @Session() session) {
+  createUser(Body, session) {
     console.log(Body, session.code)
     if (session.code.toLocaleLowerCase() === Body?.code?.toLocaleLowerCase()) {
       return {
