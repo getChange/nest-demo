@@ -71,10 +71,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
-
-## Nest常用命令
-- nest --help 可以查看nestjs所有的命令
-  - nest g co user 生成controller.ts
-  - nest g mo user 生成module.ts
-  - nest g s user 生成service.ts
-  - nest g resource luffy 以上命令的集合，生成CURD
